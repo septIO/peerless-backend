@@ -21,5 +21,6 @@ Route::prefix('v1')->group(function () {
 
 
         Route::post('/keys', [App\Http\Controllers\RouteController::class, 'storeKey'])->name('keys.store');
+        Route::get('/keys', [App\Http\Controllers\RouteController::class, 'getKeys'])->name('keys.get');
     });
 });

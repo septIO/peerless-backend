@@ -37,4 +37,11 @@ class AuthController extends Controller
     {
         return redirect()->route('battlenet.redirect');
     }
+
+    public function logout()
+    {
+        \Auth::user()->tokens()->delete();
+        \Auth::logout();
+        return redirect()->back();
+    }
 }

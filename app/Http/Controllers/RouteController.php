@@ -3,26 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\Key;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class RouteController extends Controller
 {
     public function WoWAuditRaids(Request $request)
     {
-        $client = new \GuzzleHttp\Client();
-
         $key = $request->user()->keys()->whereName('wowaudit')->first();
-        if(!$key) {
+        if (!$key) {
             return response()->json(['message' => 'No key found'], 401);
         }
 
-        $response = $client->request('GET', 'https://www.wowaudit.com/api/v1/raids', [
-            'headers' => [
-                'Authorization' => $key->key,
-            ],
-        ]);
+        $response = Http::withHeaders([
+            'Authorization' => 'c9ad37b8c325688929606c96d925ba413a07307087737c7a0a76cc887f23e635',
+        ])
+            ->accept('application/json')
+            ->get('https://wowaudit.com/v1/raids');
 
-        return $response->getBody();
+        return $response;
     }
 
     public function WoWAuditCharacter($raidID)
@@ -33,20 +33,33 @@ class RouteController extends Controller
     public function storeKey(Request $request)
     {
         $request->validate([
-            'name' => 'required',
             'key' => 'required',
+            'value' => 'required',
         ]);
         $user = $request->user();
 
         Key::updateOrCreate([
-            'name' => $request->name,
+            'name' => $request->key,
             'user_id' => $user->id,
         ], [
             'user_id' => $user->id,
-            'key' => $request->key,
+            'key' => $request->value,
+            'updated_at' => now(),
         ]);
 
         return response()->json(['message' => 'Key saved'], 201);
+    }
+
+    public function getKeys(Request $request)
+    {
+        $user = $request->user();
+        $keys = $user->keys()->get()->map(function ($key) {
+            return [
+                'name' => $key->name,
+                'value' => $key->key,
+            ];
+        });
+        return response()->json($keys);
     }
 
     private function send()

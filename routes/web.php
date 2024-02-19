@@ -16,3 +16,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/auth/battlenet/redirect', [App\Http\Controllers\Auth\AuthController::class, 'BattleNetRedirect'])->name('battlenet.redirect');
 Route::get('/auth/battlenet/callback', [App\Http\Controllers\Auth\AuthController::class, 'BattleNetCallback'])->name('battlenet.callback');
 Route::get('/auth/login', [App\Http\Controllers\Auth\AuthController::class, 'login'])->name('login');
+Route::get('/auth/logout', [App\Http\Controllers\Auth\AuthController::class, 'logout'])->name('logout');
