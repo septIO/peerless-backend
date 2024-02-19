@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/raids', [App\Http\Controllers\RouteController::class, 'WoWAuditRaids'])->name('import.raids');
+        Route::get('/raids/{id}', [App\Http\Controllers\RouteController::class, 'WoWAuditRaid'])->name('import.raid');
 
 
 

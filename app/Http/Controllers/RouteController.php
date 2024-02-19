@@ -9,25 +9,35 @@ use Illuminate\Support\Facades\Http;
 
 class RouteController extends Controller
 {
-    public function WoWAuditRaids(Request $request)
+    public static function key($name)
     {
-        $key = $request->user()->keys()->whereName('wowaudit')->first();
+        $key = \request()->user()->keys()->whereName($name)->first();
         if (!$key) {
             return response()->json(['message' => 'No key found'], 401);
         }
+        return $key->key;
+    }
 
+    public function WoWAuditRaids(Request $request)
+    {
         $response = Http::withHeaders([
-            'Authorization' => 'c9ad37b8c325688929606c96d925ba413a07307087737c7a0a76cc887f23e635',
+            'Authorization' => static::key('wowaudit'),
         ])
             ->accept('application/json')
             ->get('https://wowaudit.com/v1/raids');
 
-        return $response;
+        return $response->json();
     }
 
-    public function WoWAuditCharacter($raidID)
+    public function WoWAuditRaid(Request $request, $id)
     {
+        $response = Http::withHeaders([
+            'Authorization' => static::key('wowaudit'),
+        ])
+            ->accept('application/json')
+            ->get('https://wowaudit.com/v1/raids/' . $id);
 
+        return $response->json();
     }
 
     public function storeKey(Request $request)
