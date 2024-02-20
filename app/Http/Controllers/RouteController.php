@@ -72,6 +72,12 @@ class RouteController extends Controller
         return response()->json($keys);
     }
 
+    public function getSavedSetups(Request $request)
+    {
+        $user = $request->user();
+
+        return response()->json($setups);
+    }
     private function send()
     {
 

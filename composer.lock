@@ -4,8 +4,53 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b9e147d78f4b5330e12aba37a263ddff",
+    "content-hash": "20255c9136e715ea75bd943e1dd4a81f",
     "packages": [
+        {
+            "name": "bendeckdavid/graphql-client",
+            "version": "1.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bendeckdavid/graphql-client.git",
+                "reference": "70856791d34b5c96434a841ea35f947e995b5065"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bendeckdavid/graphql-client/zipball/70856791d34b5c96434a841ea35f947e995b5065",
+                "reference": "70856791d34b5c96434a841ea35f947e995b5065",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "BendeckDavid\\GraphqlClient\\GraphqlClientServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "BendeckDavid\\GraphqlClient\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "ISC"
+            ],
+            "description": "Graphql Client for Laravel",
+            "homepage": "https://github.com/bendeckdavid/graphql-laravel-client#readme",
+            "keywords": [
+                "BendeckDavid",
+                "Graphql Client",
+                "graphql",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/bendeckdavid/graphql-client/issues",
+                "source": "https://github.com/bendeckdavid/graphql-client/tree/v1.3.1"
+            },
+            "time": "2023-01-15T20:15:34+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.11.0",
