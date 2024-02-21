@@ -23,7 +23,11 @@ Route::prefix('v1')->group(function () {
 
         Route::post('/keys', [App\Http\Controllers\RouteController::class, 'storeKey'])->name('keys.store');
         Route::get('/keys', [App\Http\Controllers\RouteController::class, 'getKeys'])->name('keys.get');
+        Route::delete('/keys/{key:name}', [App\Http\Controllers\RouteController::class, 'deleteKey'])->name('keys.delete');
+
+        Route::get('/user', [App\Http\Controllers\RouteController::class, 'getUser'])->name('user.get');
     });
+    Route::get('fights', [App\Http\Controllers\RouteController::class, 'getFights'])->name('fights.index');
 });
 
 Route::get('test', [App\Http\Controllers\WarcraftLogController::class, 'test']);

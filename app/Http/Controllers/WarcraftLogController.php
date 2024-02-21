@@ -29,6 +29,24 @@ class WarcraftLogController extends Controller
 {
     public function test()
     {
+        $id = 420240;
+        $url = 'https://www.wowhead.com/spell=' . $id;
+        libxml_use_internal_errors(true);
+        $doc = new \DOMDocument();
+        $doc->loadHTML(file_get_contents($url));
+        $xpath = new \DOMXPath($doc);
+        $element = $xpath->query("//div[@id='ic".$id."']")->item(0);
+        if (!$element) {
+            return "Not found";
+        }
+
+        return $element->childNodes->count()  ;
+        // get background-image from style attribute
+        $style = $element->getAttribute('style');
+        preg_match('/url\((.*?)\)/', $style, $match);
+        return $style;
+
+
         $allFights = self::send(self::fightsFromSingleReportQuery('bYFJRd34ChVyBNxw'))->reportData->report->fights;
 
         // exclude wipes

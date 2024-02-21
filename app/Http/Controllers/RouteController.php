@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\FightResource;
+use App\Models\Fight;
 use App\Models\Key;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -70,6 +72,27 @@ class RouteController extends Controller
             ];
         });
         return response()->json($keys);
+    }
+
+    public function deleteKey(Request $request, Key $key)
+    {
+        $user = $request->user();
+        if ($key->user_id !== $user->id) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+        $key->delete();
+        return response()->json(['message' => 'Key deleted'], 200);
+    }
+
+    public function getUser(Request $request)
+    {
+        $user = $request->user()->only(['id', 'name']);
+        return response()->json($user);
+    }
+
+    public function getFights()
+    {
+        return FightResource::collection(Fight::all());
     }
 
     public function getSavedSetups(Request $request)
